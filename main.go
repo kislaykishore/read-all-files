@@ -1,15 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"io/fs"
-	"os"
 	"log"
+	"os"
 	"sync"
 	"time"
+	"path"
 )
 
-func listFiles(root string)[]string {
+func listFiles(root string) []string {
 	fileSystem := os.DirFS(root)
 	fileList := make([]string, 0, 1024)
 
@@ -20,20 +22,20 @@ func listFiles(root string)[]string {
 		fileList = append(fileList, path)
 		return nil
 	})
+	fmt.Println(fileList)
 	return fileList
 }
 
-
-func main(){
+func main() {
 	files := listFiles(os.Args[1])
 	start := time.Now()
 	var wg sync.WaitGroup
-	for _, fPath :=range files {
+	for _, fPath := range files {
 		fPath := fPath
 		wg.Add(1)
-		go func(){
+		go func() {
 			defer wg.Done()
-			f, err := os.Open(fPath)
+			f, err := os.Open(path.Join(os.Args[1], fPath))
 			if err != nil {
 				log.Fatal(err)
 			}
