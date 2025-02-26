@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"io/fs"
 	"log"
 	"os"
+	"path"
 	"sync"
 	"time"
-	"path"
 )
 
 func listFiles(root string) []string {
