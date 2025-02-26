@@ -22,7 +22,6 @@ func listFiles(root string) []string {
 		fileList = append(fileList, path)
 		return nil
 	})
-	fmt.Println(fileList)
 	return fileList
 }
 
